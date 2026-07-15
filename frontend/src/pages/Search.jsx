@@ -5,7 +5,6 @@ import Sidebar from "../components/Sidebar";
 import UserCard from "../components/UserCard";
 import Loader from "../components/Loader";
 import { FiSearch } from "react-icons/fi";
-import "../styles/home.css";
 
 const Search = () => {
   const [query, setQuery] = useState("");
@@ -42,19 +41,18 @@ const Search = () => {
     <>
       <Navbar />
       <Sidebar />
-      <div className="home-page">
-        <div className="feed-column">
-          <h2 style={{ marginBottom: 20, fontSize: 22, fontWeight: 700 }}>
+      <div className="flex min-h-screen pt-[var(--navbar-height)]">
+        <div className="flex-1 ml-0 md:ml-[var(--sidebar-width)] p-4 md:p-6 max-w-full md:max-w-[680px]">
+          <h2 className="mb-5 text-[22px] font-bold">
             Search Users
           </h2>
 
           {/* Search Input */}
-          <div className="glass-card" style={{ padding: 16, marginBottom: 20 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-              <FiSearch size={20} color="var(--text-muted)" />
+          <div className="glass-card p-4 mb-5">
+            <div className="flex items-center gap-3">
+              <FiSearch size={20} className="text-text-muted" />
               <input
-                className="form-input"
-                style={{ border: "none", background: "transparent", padding: "4px 0" }}
+                className="flex-1 border-none bg-transparent py-1 text-text-primary text-sm placeholder:text-text-muted outline-none"
                 placeholder="Search by username or name..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
@@ -67,8 +65,8 @@ const Search = () => {
           {loading && <Loader size="inline" />}
 
           {!loading && searched && results.length === 0 && (
-            <div style={{ textAlign: "center", padding: 40, color: "var(--text-muted)" }}>
-              <FiSearch size={40} style={{ marginBottom: 12, opacity: 0.3 }} />
+            <div className="text-center p-10 text-text-muted flex flex-col items-center">
+              <FiSearch size={40} className="mb-3 opacity-30" />
               <p>No users found for "{query}"</p>
             </div>
           )}
@@ -78,9 +76,9 @@ const Search = () => {
           ))}
 
           {!query && !searched && (
-            <div style={{ textAlign: "center", padding: 60, color: "var(--text-muted)" }}>
-              <FiSearch size={48} style={{ marginBottom: 16, opacity: 0.2 }} />
-              <p style={{ fontSize: 16 }}>Search for people to connect with</p>
+            <div className="text-center py-16 text-text-muted flex flex-col items-center">
+              <FiSearch size={48} className="mb-4 opacity-20" />
+              <p className="text-base">Search for people to connect with</p>
             </div>
           )}
         </div>

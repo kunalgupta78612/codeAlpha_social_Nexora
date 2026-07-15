@@ -10,7 +10,6 @@ import {
 import { AiFillHeart } from "react-icons/ai";
 import { MdVerified } from "react-icons/md";
 import toast from "react-hot-toast";
-import "../styles/components.css";
 
 const PostCard = ({ post, onDelete }) => {
   const { user } = useAuth();
@@ -48,36 +47,36 @@ const PostCard = ({ post, onDelete }) => {
     : `https://ui-avatars.com/api/?name=${post.user?.username}&background=6c63ff&color=fff`;
 
   return (
-    <div className="post-card glass-card fade-in">
+    <div className="glass-card p-5 mb-4 transition-colors hover:border-border-hover animate-[fadeIn_0.4s_ease_forwards]">
       {/* Header */}
-      <div className="post-header">
+      <div className="flex items-center justify-between mb-3.5">
         <div
-          className="post-user-info"
+          className="flex items-center gap-3 cursor-pointer"
           onClick={() => navigate(`/profile/${post.user?._id}`)}
         >
           <img src={avatarSrc} alt={post.user?.username}
-            className="avatar" style={{ width: 42, height: 42 }} />
+            className="w-[42px] h-[42px] rounded-full object-cover bg-bg-secondary border-2 border-border" />
           <div>
-            <div className="post-username">
+            <div className="text-[15px] font-semibold flex items-center gap-1">
               {post.user?.fullName || post.user?.username}
               {post.user?.isVerified && (
-                <MdVerified size={14} color="#6c63ff" style={{ marginLeft: 4 }} />
+                <MdVerified size={14} color="#6c63ff" className="ml-1" />
               )}
             </div>
-            <div className="post-handle">
+            <div className="text-xs text-text-muted mt-0.5">
               @{post.user?.username} · {format(post.createdAt)}
             </div>
           </div>
         </div>
 
         {isOwner && (
-          <div className="post-menu-wrap">
-            <button className="icon-btn" onClick={() => setShowMenu(!showMenu)}>
+          <div className="relative">
+            <button className="flex items-center justify-center w-9 h-9 rounded-full bg-transparent text-text-secondary transition-all border border-transparent hover:bg-bg-glass hover:text-text-primary hover:border-border" onClick={() => setShowMenu(!showMenu)}>
               <FiMoreHorizontal size={18} />
             </button>
             {showMenu && (
-              <div className="post-menu">
-                <button onClick={handleDelete} className="menu-item danger">
+              <div className="absolute top-10 right-0 bg-bg-secondary border border-border rounded-xl p-1.5 min-w-[130px] shadow-md z-10">
+                <button onClick={handleDelete} className="flex items-center gap-2 w-full py-2 px-3 rounded-lg text-[13px] bg-transparent border-none cursor-pointer text-danger transition-colors hover:bg-bg-glass">
                   <FiTrash2 size={14} /> Delete
                 </button>
               </div>
@@ -88,24 +87,24 @@ const PostCard = ({ post, onDelete }) => {
 
       {/* Caption */}
       {post.caption && (
-        <p className="post-caption">{post.caption}</p>
+        <p className="text-[15px] leading-relaxed text-text-primary mb-3.5 whitespace-pre-wrap">{post.caption}</p>
       )}
 
       {/* Image */}
       {post.image && (
-        <div className="post-image-wrap">
+        <div className="rounded-xl overflow-hidden mb-3.5">
           <img
             src={`${import.meta.env.VITE_UPLOADS_URL}/${post.image}`}
             alt="post"
-            className="post-image"
+            className="w-full max-h-[500px] object-cover"
           />
         </div>
       )}
 
       {/* Actions */}
-      <div className="post-actions">
+      <div className="flex gap-4 pt-3 border-t border-border">
         <button
-          className={`action-btn ${isLiked ? "liked" : ""}`}
+          className={`flex items-center gap-[7px] bg-transparent text-text-secondary text-[14px] font-medium py-1.5 px-3 rounded-full transition-colors border-none cursor-pointer hover:bg-bg-glass hover:text-text-primary ${isLiked ? "!text-danger" : ""}`}
           onClick={handleLike}
         >
           {isLiked
@@ -115,7 +114,7 @@ const PostCard = ({ post, onDelete }) => {
         </button>
 
         <button
-          className="action-btn"
+          className="flex items-center gap-[7px] bg-transparent text-text-secondary text-[14px] font-medium py-1.5 px-3 rounded-full transition-colors border-none cursor-pointer hover:bg-bg-glass hover:text-text-primary"
           onClick={() => setShowComments(!showComments)}
         >
           <FiMessageCircle size={20} />

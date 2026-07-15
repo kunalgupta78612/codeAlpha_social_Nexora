@@ -31,24 +31,24 @@ const UserCard = ({ userData }) => {
 
   return (
     <div
-      className="user-card glass-card"
+      className="glass-card flex items-center gap-3.5 p-4 cursor-pointer transition-all mb-2.5 hover:border-border-hover hover:-translate-y-px"
       onClick={() => navigate(`/profile/${userData._id}`)}
     >
       <img src={avatarSrc} alt={userData.username}
-        className="avatar" style={{ width: 56, height: 56 }} />
-      <div className="user-card-info">
-        <div className="user-card-name">
+        className="w-14 h-14 rounded-full object-cover bg-bg-secondary border-2 border-border" />
+      <div className="flex-1">
+        <div className="text-[15px] font-semibold flex items-center gap-1">
           {userData.fullName || userData.username}
           {userData.isVerified && <MdVerified size={14} color="#6c63ff" />}
         </div>
-        <div className="user-card-handle">@{userData.username}</div>
-        <div className="user-card-stats">
+        <div className="text-xs text-text-muted">@{userData.username}</div>
+        <div className="text-xs text-text-secondary mt-1">
           <span>{userData.followers?.length || 0} followers</span>
         </div>
       </div>
       {!isOwnProfile && (
         <button
-          className={`btn ${isFollowing ? "btn-outline" : "btn-primary"} btn-sm`}
+          className={`inline-flex items-center justify-center gap-2 px-[14px] py-[6px] rounded-full text-[13px] font-semibold transition-all ${isFollowing ? "bg-transparent text-text-primary border border-border hover:border-accent hover:text-accent hover:bg-accent-light" : "bg-accent text-white hover:bg-accent-hover hover:shadow-glow hover:-translate-y-[1px]"}`}
           onClick={handleFollow}
         >
           {isFollowing ? "Following" : "Follow"}

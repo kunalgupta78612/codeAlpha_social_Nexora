@@ -8,7 +8,6 @@ import PostCard from "../components/PostCard";
 import Loader from "../components/Loader";
 import { FiImage, FiX } from "react-icons/fi";
 import toast from "react-hot-toast";
-import "../styles/home.css";
 
 const Home = () => {
   const { user } = useAuth();
@@ -93,28 +92,28 @@ const Home = () => {
     <>
       <Navbar />
       <Sidebar />
-      <div className="home-page">
-        <div className="feed-column">
+      <div className="flex min-h-screen pt-[var(--navbar-height)]">
+        <div className="flex-1 ml-0 md:ml-[var(--sidebar-width)] p-4 md:p-6 max-w-full md:max-w-[680px]">
           {/* Story Bar */}
           <StoryBar />
 
           {/* Create Post */}
-          <div className="create-post-card glass-card">
+          <div className="glass-card p-4 md:p-5 mb-4">
             {!expanded ? (
-              <div className="create-post-top">
-                <img src={avatarSrc} alt="you" className="avatar"
-                  style={{ width: 42, height: 42 }} />
-                <div className="create-post-input"
+              <div className="flex items-center gap-3">
+                <img src={avatarSrc} alt="you" className="w-[42px] h-[42px] rounded-full object-cover bg-bg-secondary border-2 border-border" />
+                <div className="flex-1 bg-bg-glass border border-border rounded-full py-2.5 px-4 text-sm text-text-muted cursor-pointer transition-colors hover:border-accent hover:ring-[3px] hover:ring-accent-light"
                   onClick={() => setExpanded(true)}>
                   What's on your mind, {user?.fullName || user?.username}?
                 </div>
               </div>
             ) : (
-              <div className="create-post-expanded">
-                <div className="create-post-top">
-                  <img src={avatarSrc} alt="you" className="avatar"
-                    style={{ width: 42, height: 42 }} />
+              <div className="flex flex-col gap-4">
+                <div className="flex gap-3">
+                  <img src={avatarSrc} alt="you" className="w-[42px] h-[42px] rounded-full object-cover bg-bg-secondary border-2 border-border" />
                   <textarea
+                    className="flex-1 bg-transparent text-text-primary text-sm resize-none outline-none placeholder:text-text-muted mt-2"
+                    rows="3"
                     placeholder={`What's on your mind, ${user?.fullName || user?.username}?`}
                     value={caption}
                     onChange={(e) => setCaption(e.target.value)}
@@ -124,29 +123,28 @@ const Home = () => {
                 </div>
 
                 {imagePreview && (
-                  <div className="post-image-preview">
-                    <img src={imagePreview} alt="preview" />
-                    <button className="remove-image"
+                  <div className="relative rounded-md overflow-hidden">
+                    <img src={imagePreview} alt="preview" className="w-full max-h-[300px] object-cover" />
+                    <button className="absolute top-2 right-2 p-1.5 bg-black/60 text-white rounded-full hover:bg-black/80 transition-colors"
                       onClick={() => { setImageFile(null); setImagePreview(null); }}>
                       <FiX />
                     </button>
                   </div>
                 )}
 
-                <div className="create-post-actions">
-                  <label htmlFor="post-image" className="btn btn-outline btn-sm"
-                    style={{ cursor: "pointer" }}>
+                <div className="flex items-center justify-between pt-3 border-t border-border">
+                  <label htmlFor="post-image" className="inline-flex items-center justify-center gap-2 px-[14px] py-[6px] rounded-full text-[13px] font-semibold transition-all bg-transparent text-text-primary border border-border hover:border-accent hover:text-accent hover:bg-accent-light cursor-pointer">
                     <FiImage size={15} /> Photo
                   </label>
                   <input id="post-image" type="file" accept="image/*"
-                    style={{ display: "none" }} onChange={handleImageChange} />
+                    className="hidden" onChange={handleImageChange} />
 
-                  <div style={{ display: "flex", gap: 8 }}>
-                    <button className="btn btn-outline btn-sm"
+                  <div className="flex gap-2">
+                    <button className="inline-flex items-center justify-center gap-2 px-[14px] py-[6px] rounded-full text-[13px] font-semibold transition-all bg-transparent text-text-primary border border-border hover:border-accent hover:text-accent hover:bg-accent-light"
                       onClick={() => { setExpanded(false); setCaption(""); setImagePreview(null); }}>
                       Cancel
                     </button>
-                    <button className="btn btn-primary btn-sm"
+                    <button className="inline-flex items-center justify-center gap-2 px-[14px] py-[6px] rounded-full text-[13px] font-semibold transition-all bg-accent text-white hover:bg-accent-hover hover:shadow-glow hover:-translate-y-[1px] disabled:opacity-70 disabled:cursor-not-allowed"
                       onClick={handlePost} disabled={posting}>
                       {posting ? "Posting..." : "Post"}
                     </button>
@@ -158,9 +156,9 @@ const Home = () => {
 
           {/* Posts Feed */}
           {posts.length === 0 ? (
-            <div className="feed-empty">
-              <h3>Your feed is empty</h3>
-              <p>Follow some users to see their posts here!</p>
+            <div className="py-10 text-center">
+              <h3 className="text-lg font-semibold text-text-primary mb-2">Your feed is empty</h3>
+              <p className="text-sm text-text-muted">Follow some users to see their posts here!</p>
             </div>
           ) : (
             <>
@@ -168,7 +166,7 @@ const Home = () => {
                 <PostCard key={post._id} post={post} onDelete={handleDeletePost} />
               ))}
               {hasMore && (
-                <button className="load-more-btn" onClick={handleLoadMore}>
+               <button className="w-full py-3 text-sm font-medium text-accent hover:text-accent-hover transition-colors" onClick={handleLoadMore}>
                   Load more posts
                 </button>
               )}

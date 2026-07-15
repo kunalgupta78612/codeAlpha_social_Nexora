@@ -1,5 +1,4 @@
 import { useAuth } from "../context/AuthContext";
-import "../styles/components.css";
 
 // Stories are UI-only in this version (no backend needed for portfolio)
 const StoryBar = () => {
@@ -15,29 +14,28 @@ const StoryBar = () => {
   ];
 
   return (
-    <div className="story-bar">
+    <div className="flex gap-4 p-4 bg-bg-glass backdrop-blur-[20px] border border-border rounded-[20px] overflow-x-auto mb-5 [&::-webkit-scrollbar]:hidden">
       {stories.map((story) => (
-        <div key={story.id} className="story-item">
+        <div key={story.id} className="flex flex-col items-center gap-1.5 cursor-pointer shrink-0">
           <div
-            className="story-ring"
+            className="w-16 h-16 rounded-full p-[2px] flex items-center justify-center"
             style={{ background: story.isYou ? "transparent" : `linear-gradient(135deg, ${story.color}, #ff6b9d)` }}
           >
-            <div className="story-avatar-wrap">
+            <div className="w-[58px] h-[58px] rounded-full bg-bg-primary p-[2px] flex items-center justify-center">
               {story.isYou ? (
-                <div className="story-add">
+                <div className="relative">
                   <img
                     src={user?.profileImage
                       ? `${import.meta.env.VITE_UPLOADS_URL}/${user.profileImage}`
                       : `https://ui-avatars.com/api/?name=${user?.username}&background=6c63ff&color=fff`}
                     alt="you"
-                    className="avatar"
-                    style={{ width: 52, height: 52 }}
+                    className="w-[52px] h-[52px] rounded-full object-cover bg-bg-secondary border-2 border-border"
                   />
-                  <span className="story-plus">+</span>
+                  <span className="absolute bottom-0 right-0 w-[18px] h-[18px] bg-accent rounded-full flex items-center justify-center text-xs text-white font-bold">+</span>
                 </div>
               ) : (
                 <div
-                  className="story-placeholder"
+                  className="w-[52px] h-[52px] rounded-full flex items-center justify-center font-bold"
                   style={{ background: story.color + "33" }}
                 >
                   <span style={{ color: story.color, fontSize: 20 }}>
@@ -47,7 +45,7 @@ const StoryBar = () => {
               )}
             </div>
           </div>
-          <span className="story-name">
+          <span className="text-[11px] text-text-secondary max-w-[64px] overflow-hidden text-ellipsis whitespace-nowrap text-center">
             {story.isYou ? "Your Story" : story.username}
           </span>
         </div>
